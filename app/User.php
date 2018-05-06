@@ -26,4 +26,29 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    // Email
+    public function setEmailAttribute($value){
+        if(empty($value)){
+            $faker = \Faker\Factory::create();
+            $this->attributes['email'] = $faker->unique()->safeEmail;
+        }else{
+            $this->attributes['email'] = $value;
+        }
+    }
+
+// Password hashing
+    public function setPasswordAttribute($value){
+        if(empty($value)){
+            $this->attributes['password'] = \Hash::make('123456');
+        }
+    }
+
+    public function animal()
+    {
+        return $this->hasOne('App\Animal');
+    }
+
+
+
 }
